@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .main{
+            width: 90vw;
+            height: 60vh;
+            border: 2px solid black;
+            border-radius: 3rem;
+            display: flex;
+            flex-direction: column;
+            margin: 100px 100px;
+            background-color: bisque;
+            
+        }
+        section{
+            width:90%;
+            height:250px;
+            text-align:center;
+            border:2px solid black;
+            float:left;
+            margin:20px 50px;
+            border-radius: 3rem;
+            
+            
+        }
+        img{
+            width:100px;
+            height:100px;
+            margin:10px;
+            border:3px solid blue;
+        }
+        img:active{
+            transform: rotate(360deg) scale(1.8);
+
+            transition:all 2s;
+        }
+        
+    
+        
+    </style>
+    <script>
+        window.addEventListener('load', function () {
+        
+            let allimages = this.document.images;
+            for (let i = 0; i < allimages.length; i++) {
+                allimages[i].addEventListener('dragstart', startdrag);
+                allimages[i].addEventListener('dragend', enddrag);
+            
+            }
+            
+            left = this.document.getElementById('left');
+            left.addEventListener('drop', dropped);
+            left.addEventListener('dragenter', enterdrag);
+            left.addEventListener('dragover', overdrag);
+            
+            right = this.document.getElementById('right');
+            right.addEventListener('dragleave', leavedrag);
+        });
+        function startdrag(e) {
+        
+            e.dataTransfer.setData('myimg', e.target.outerHTML);
+            
+        }
+        function enddrag(e) {
+            e.preventDefault();
+            
+            e.target.style.display = "none";
+            
+            let remainingImages = document.querySelectorAll("#right img:not([style*='display: none'])");
+    if (remainingImages.length === 0) {
+        let rightSection = document.getElementById('right');
+        rightSection.style.backgroundColor = "lightgreen";
+        rightSection.style.height = "30px";
+        rightSection.innerHTML = "EMPTY "
+        
+    }
+            
+        }
+        function dropped(e) {
+            e.preventDefault();
+            left.innerHTML += e.dataTransfer.getData('myimg');
+        
+        }
+        function enterdrag(e) {
+            e.preventDefault();
+            left.style.backgroundColor = "lightblue";
+        }
+        function leavedrag(e) {
+            e.preventDefault();
+            
+        
+        }
+        function overdrag(e) {
+            e.preventDefault();
+        }
+    
+    </script>
+</head>
+<body>
+    <div class="main">
+
+    <section id="right">
+        <img src="UP/1.jpg" />
+        <img src="UP/2.jpg" />
+        <img src="UP/3.jpg" />
+        <img src="UP/4.jpg" />
+        <img src="UP/5.jpg" />
+        <img src="UP/6.jpg" />
+        <img src="UP/7.jpg" />
+        <img src="UP/8.jpg" />
+        <img src="UP/9.jpg" />
+
+
+    </section>
+    <section id="left">
+
+    </section>
+    </div>
+</body>
+</html>
